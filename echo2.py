@@ -45,7 +45,6 @@ def plot_waveform(time_axis, signal):
 
 def add_echo_with_convolution(file_path, delay=0.3, feedback=0.5, repetitions=2, output_path="output_with_echo.wav"):
     try:
-        # Read the audio file
         with wave.open(file_path, "r") as spf:
             fs = spf.getframerate()
             n_channels = spf.getnchannels()
@@ -53,27 +52,21 @@ def add_echo_with_convolution(file_path, delay=0.3, feedback=0.5, repetitions=2,
             signal = spf.readframes(-1)
             signal = np.frombuffer(signal, dtype=np.int16)
         
-        # Normalize the signal to avoid clipping during convolution
         max_amplitude = max(abs(signal))
         normalized_signal = signal / max_amplitude
         
-        # Create the impulse response with a single echo (you can adjust repetitions for more echoes)
         delay_samples = int(delay * fs)
-        impulse_response = np.zeros(delay_samples + 1)  # Only 1 echo delay
-        impulse_response[0] = 1  # Original sound
-        impulse_response[delay_samples] = feedback  # Echo
+        impulse_response = np.zeros(delay_samples + 1)
+        impulse_response[0] = 1  # original
+        impulse_response[delay_samples] = feedback  # echo
         
-        # Apply convolution with the normalized signal and the impulse response
         echoed_signal = np.convolve(normalized_signal, impulse_response, mode='full')
         
-        # Truncate to the original length of the signal
-        echoed_signal = echoed_signal[:len(signal)]
+        echoed_signal = echoed_signal[:len(signal)] #make the length the same
         
-        # Scale back to the original amplitude range
         echoed_signal = echoed_signal * max_amplitude
         echoed_signal = np.clip(echoed_signal, -32768, 32767).astype(np.int16)
         
-        # Save the output to a new file with the correct header information
         with wave.open(output_path, "w") as output:
             output.setnchannels(n_channels)
             output.setsampwidth(sampwidth)
