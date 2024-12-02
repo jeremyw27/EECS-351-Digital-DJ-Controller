@@ -21,7 +21,7 @@ def phase_vocoder(audio_file, mod_freq, mod_depth):
     t = np.arange(D.shape[1]) / sr * hop_length
     phase_modulation = modulation_depth * np.sin(2 * np.pi * modulation_frequency * t)
 
-    # adjust phase and magnitude: combine phase and magnitude with newly modulated phase
+    # adjust phase and reconstruct complex STFT mag: combine phase and magnitude with newly modulated phase
     phase_modulated = phase + phase_modulation
     D_modulated = magnitude * np.exp(1j * phase_modulated)
 
