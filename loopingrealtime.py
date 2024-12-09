@@ -36,12 +36,10 @@ def convert_wav_to_mono(input_file, output_file):
 def play_looping_audio(file_path, chunk_size, init_stop, cutoff_slider_values, loop_start_ms, loop_end_ms):
     try:
         # Construct the correct path for the converted mono file
-        mono_file_path = os.path.splitext(file_path)[0] + "_mono.wav"  # Adds "_mono" to the original filename
+        mono_file_path = os.path.splitext(file_path)[0] + "_mono.wav" 
 
-        # Convert to mono if necessary
         convert_wav_to_mono(file_path, mono_file_path)
         
-        # Check if the converted mono file exists
         if not os.path.exists(mono_file_path):
             window.write_event_value("-ERROR", f"File does not exist: {mono_file_path}")
             return
@@ -95,12 +93,12 @@ def play_looping_audio(file_path, chunk_size, init_stop, cutoff_slider_values, l
 # GUI Layout
 layout = [
     [simpg.Text("Input Audio File"), simpg.Input(key="-FILE-", enable_events=True), simpg.FileBrowse(file_types=(("WAV Files", "*.wav"),))],
-    [simpg.Text("Cutoff Frequency (Hz)", size=(15, 1)), simpg.Slider(range=(0, 30000), resolution=100, orientation="h", size=(50, 15), default_value=10000, key="-CUTOFF-")],
+    [simpg.Text("Cutoff Frequency (Hz)", size=(17, 1)), simpg.Slider(range=(0, 30000), resolution=100, orientation="h", size=(30, 15), default_value=10000, key="-CUTOFF-")],
     [simpg.Text("Chunk Size"), simpg.Input(default_text="1024", key="-CHUNK-", size=(10, 1))],
     [simpg.Text("Loop Start (ms)"), simpg.Input(default_text="0", key="-LOOP-START-", size=(10, 1))],
     [simpg.Text("Loop End (ms)"), simpg.Input(default_text="10000", key="-LOOP-END-", size=(10, 1))],
     [simpg.Button("PLAY", key="-PLAY-"), simpg.Button("STOP", key="-STOP-"), simpg.Exit()],
-    [simpg.Text("", size=(50, 1), key="-ERROR-", text_color="red")]  # Error display area
+    [simpg.Text("", size=(50, 1), key="-ERROR-", text_color="red")] 
 ]
 
 # GUI Window
@@ -111,7 +109,6 @@ stop_event = Event()
 # Slider value storage
 cutoff_slider_values = {"-CUTOFF-": 5000}
 
-# Main Event Loop
 while True:
     event, values = window.read(timeout=100)  # Update the GUI every 100 ms
 
@@ -120,6 +117,10 @@ while True:
         if play_thread and play_thread.is_alive():
             play_thread.join()
         break
+
+    # Display errors if any
+    if event == "-ERROR":
+        window["-ERROR-"].update(values[event])  # Update the error message area
 
     # Update slider value for real-time processing
     cutoff_slider_values["-CUTOFF-"] = values["-CUTOFF-"]
@@ -153,7 +154,3 @@ while True:
         stop_event.set()
         if play_thread and play_thread.is_alive():
             play_thread.join()
-
-    # Display errors if any
-    if event == "-ERROR":
-        window["-ERROR-"].update(values[event])  # Update the error message area
