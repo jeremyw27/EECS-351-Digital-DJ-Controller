@@ -43,7 +43,7 @@ def plot_waveform(time_axis, signal):
     plt.show()
 
 
-def add_echo_with_convolution(file_path, delay=0.3, feedback=0.5, repetitions=2, output_path="output_with_echo.wav"):
+def add_echo_with_convolution(file_path, delay=0.3, feedback=0.5, repetitions=1, output_path="output_with_echo.wav"):
     try:
         with wave.open(file_path, "r") as spf:
             fs = spf.getframerate()
@@ -61,11 +61,21 @@ def add_echo_with_convolution(file_path, delay=0.3, feedback=0.5, repetitions=2,
         impulse_response[delay_samples] = feedback  # echo
         
         echoed_signal = np.convolve(normalized_signal, impulse_response, mode='full')
-        
-        echoed_signal = echoed_signal[:len(signal)] #make the length the same
+        echoed_signal = echoed_signal[:len(signal)]  # Ensure same length as original signal
         
         echoed_signal = echoed_signal * max_amplitude
         echoed_signal = np.clip(echoed_signal, -32768, 32767).astype(np.int16)
+        
+        # Plot the echoed waveform
+        time_axis = np.linspace(0, len(signal) / fs, num=len(signal))
+        plt.figure(figsize=(10, 4))
+        plt.title("Waveform with Echo Effect")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Amplitude")
+        plt.plot(time_axis, echoed_signal, label="Echoed Signal")
+        plt.legend()
+        plt.grid()
+        plt.show()
         
         with wave.open(output_path, "w") as output:
             output.setnchannels(n_channels)
@@ -78,6 +88,7 @@ def add_echo_with_convolution(file_path, delay=0.3, feedback=0.5, repetitions=2,
         print(f"An error occurred during convolution-based echo processing: {error}")
 
 
+
 def play_audio(file_path):
     try:
         audio = AudioSegment.from_file(file_path)
@@ -87,8 +98,8 @@ def play_audio(file_path):
 
 
 if __name__ == "__main__":
-    FILE_PATH = r"C:\Users\allyb\OneDrive\Desktop\eecs351final\clean-trap-loop.wav"
-    OUTPUT_PATH = r"C:\Users\allyb\OneDrive\Desktop\eecs351final\clean-trap-loop-with-echo.wav"
+    FILE_PATH = r"C:\Users\allyb\OneDrive\Desktop\eecs351final\violin.wav"
+    OUTPUT_PATH = r"C:\Users\allyb\OneDrive\Desktop\eecs351final\violin-with-echo.wav"
 
     if check_file_exists(FILE_PATH):
         process_wave_file(FILE_PATH)
@@ -97,7 +108,7 @@ if __name__ == "__main__":
         play_audio(FILE_PATH)
         
         print("Adding echo effect using convolution...")
-        add_echo_with_convolution(FILE_PATH, delay=0.3, feedback=0.5, repetitions=2, output_path=OUTPUT_PATH)
+        add_echo_with_convolution(FILE_PATH, delay=0.3, feedback=0.5, repetitions=1, output_path=OUTPUT_PATH)
         
         print("Playing audio with echo...")
         play_audio(OUTPUT_PATH)
