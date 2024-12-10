@@ -220,7 +220,7 @@ def higheqfilter(gain, fs):
         a[1] = -2 * math.cos(f0*pi/(fs/2))/(1 + beta)
         a[2] = (1 - beta)/(1 + beta)
 
-    else:   #original filter didnt' work with negative gain so I added a new filter for negative gain
+    else:   
         
         f0 = 12500
         bf = 1
