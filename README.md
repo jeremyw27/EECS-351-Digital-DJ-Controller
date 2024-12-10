@@ -19,7 +19,9 @@ Our Digital DJ Controller project combines digital signal processing (DSP) and v
                  effect: cutoff frequency, Loop start, and Loop end. The user is also able to input the chunk size
                  which determines the number of segments the original audio is split into during processing.
   
-- livefiltering.py:
+- livefiltering.py:  This is the filtering file with realtime playback.  This script processes
+                     audio files and continuously applies user selected filter parameters from the custom GUI.
+                    It has a high pass filter, a low pass filter, low, mid and high eq, and a volume slider.
 
 - phase_vocoder.py: This is the function just to apply pitch modulation to an audio file. It takes in a WAV file as input and outputs a WAV file with the applied effect. It also outputs plots of the original signal waveform as well as the pitch modulated effect.
 
