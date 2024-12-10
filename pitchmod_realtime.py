@@ -41,14 +41,14 @@ class PitchModulationApp:
         self.freq_label = tk.Label(root, text="Modulation Frequency (Hz)")
         self.freq_label.pack()
         self.freq_knob = Scale(root, from_=1, to=20, resolution=1, orient=tk.HORIZONTAL)
-        self.freq_knob.set(10)
+        self.freq_knob.set(1)
         self.freq_knob.pack()
 
         # modulation depth knob
         self.depth_label = tk.Label(root, text="Modulation Depth (semitones)")
         self.depth_label.pack()
         self.depth_knob = Scale(root, from_=0, to=24, resolution=1, orient=tk.HORIZONTAL)
-        self.depth_knob.set(12)
+        self.depth_knob.set(0)
         self.depth_knob.pack()
 
         # start button
