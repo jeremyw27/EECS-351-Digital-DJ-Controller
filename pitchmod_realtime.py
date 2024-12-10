@@ -11,8 +11,8 @@ import threading
 # function to apply pitch modulation (modified from phase_vocoder.py)
 def phase_vocoder(audio_data, sr, mod_freq, mod_depth):
     # STFT
-    n_fft = 2048  # length of windowed signal after padding with zeros
-    hop_length = 512  # step size between windows
+    n_fft = 1024  # length of windowed signal after padding with zeros
+    hop_length = 256  # step size between windows
     D = librosa.stft(audio_data, n_fft=n_fft, hop_length=hop_length)
     magnitude, phase = np.abs(D), np.angle(D)
 
@@ -35,16 +35,16 @@ class PitchModulationApp:
     def __init__(self, root, audio_file):
         self.root = root
         self.audio_file = audio_file
-        self.root.title("Audio File Pitch Modulation")
+        self.root.title("Real Time Pitch Modulation")
 
-        # modulation frequency knob
+        # modulation frequency slider
         self.freq_label = tk.Label(root, text="Modulation Frequency (Hz)")
         self.freq_label.pack()
         self.freq_knob = Scale(root, from_=1, to=20, resolution=1, orient=tk.HORIZONTAL)
         self.freq_knob.set(1)
         self.freq_knob.pack()
 
-        # modulation depth knob
+        # modulation depth slider
         self.depth_label = tk.Label(root, text="Modulation Depth (semitones)")
         self.depth_label.pack()
         self.depth_knob = Scale(root, from_=0, to=24, resolution=1, orient=tk.HORIZONTAL)
