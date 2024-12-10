@@ -21,6 +21,4 @@
                 as input and outputs a WAV file with the applied effect. It also outputs plots of the original
                 signal waveform as well as the pitch modulated effect.
 
-- pitchmod_realtime.py: This is a modified version of the phase_vocoder.py file and includes the GUI. The GUI has
-                sliders to adjust the modulation frequency as well as the modulation depth for pitch modulation.
-                It takes in an audio file as the input and enables real-time pitch modulation once it is run.
+- pitchmod_realtime.py: This is a modified version of the phase_vocoder.py file and includes the GUI. The GUI has sliders to adjust the modulation frequency as well as the modulation depth for pitch modulation. It takes in an audio file as the input and enables real-time pitch modulation once it is run.
