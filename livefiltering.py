@@ -3,7 +3,7 @@ To play this file run "python .\livefiltering.py song.wav"  where your song is t
 you need tkinter, sounddevice, numpy, and scipy
 """
 
-
+import time
 import math
 import argparse
 import queue
@@ -76,8 +76,7 @@ class SliderApp:
         self.high_gain_slider.set(0)  #0 initial gain
         self.high_gain_slider.pack()
 
-        self.pause_button = tk.Button(master, text="Pause", command=self.toggle_pause)
-        self.pause_button.pack()
+        
 
         self.current_volume = tk.DoubleVar(value=self.volume_slider.get())
         self.volume_slider.config(variable=self.current_volume)
@@ -455,10 +454,20 @@ def read_wav_file(filename, blocksize):  #open wav file
 def file_reader_thread(wave_gen, timeout):
     try:
         while True:
+            
+            with pause_lock:
+                
+                if pause[0]:
+                    
+                    time.sleep(.1)
+                    continue
+            
             data = next(wave_gen, None) #keep looking through chunk iterator
             if data is None:
+                
                 break
             q.put(data, timeout=timeout)  #put data into queue
+            
     except Exception as e:
         print(f"Exception in file_reader_thread: {e}")
 
