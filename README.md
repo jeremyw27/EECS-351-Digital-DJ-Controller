@@ -14,8 +14,10 @@ Our Digital DJ Controller project combines digital signal processing (DSP) and v
                manipulates the audio.                    
 
 - loopingrealtime.py: This is the looping function WITH real-time audio manipulation. This script processes
-                 audio files by applying progressively filtered segments using a low-pass filter
-                 and provides waveforms and spectrograms of the original and filtered signals. 
+                 audio files by windowing audio segments and implements a low pass filter. The program has a GUI 
+                 interface that prompts the user to choose an input audio file and three sliders that create the
+                 effect: cutoff frequency, Loop start, and Loop end. The user is also able to input the chunk size
+                 which determines the number of segments the original audio is split into during processing.
   
 - livefiltering.py:
 
