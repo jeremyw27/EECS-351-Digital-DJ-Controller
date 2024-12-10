@@ -13,8 +13,8 @@
 #               manipulates the audio.                    
 #
 #   - loopingrealtime.py: This is the looping function WITH real-time audio manipulation. This script processes
-#                 audio files by applying progressively filtered segments using a low-pass filter
-#                 and provides waveforms and spectrograms of the original and filtered signals. 
+#                         audio files by applying progressively filtered segments using a low-pass filter
+#                         and provides waveforms and spectrograms of the original and filtered signals. 
 #   
 #   - livefiltering.py: 
 #
