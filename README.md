@@ -1,5 +1,6 @@
 # EECS-351-Digital-DJ-Controller Team 14 Final Project
-#
+Our Digital DJ Controller project combines digital signal processing (DSP) and various audio libraries in Python to create an interactive, real-time audio experience with effects such as echo, pitch modulation, filtering, and looping. Unlike traditional systems that work with pre-recorded audio, our project emphasizes live audio manipulation, allowing users to alter sound instantaneously. By leveraging DSP techniques, we transform audio signals in real time, giving users creative control over every beat, tone, and loop. With Python libraries such as Pyo, Pydub, and Librosa, we can produce high-quality, low-latency effects that bring a professional DJ experience to any setting. Explore our project details, code, and live demos on our GitHub page for a deep dive into the technical aspects of our digital audio transformations. 
+
 # Description of files:
 
 - echo2.py: This is a working version of the echo function with no real-time manipulation. 
